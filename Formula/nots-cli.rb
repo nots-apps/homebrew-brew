@@ -2,17 +2,17 @@ class NotsCli < Formula
   desc "Everything you need to get started with Nots"
   homepage "https://cli.notsapps.com"
   url "https://nots-cli.s3.eu-central-1.amazonaws.com/nots-v0.0.1-stable/nots-v0.0.1-stable.tar.gz"
-  sha256 "d57cc6a54ede8843a491b98817074d8a53e67626f09f16d6b0714aafdbac6ec3"
+  sha256 "bea6a89a53c2521467cdd8ac96e83e85b50510f8f865c260dfb21c4422f719f0"
   depends_on "nots-apps/brew/nots-cli-node"
 
   def install
     inreplace "bin/nots", /^CLIENT_HOME=/, "export NOTS_OCLIF_CLIENT_HOME=#{lib/"client"}\nCLIENT_HOME="
-    inreplace "bin/nots", "\"$DIR/node\"", "#{Formula["nots-node-cli"].opt_share}/node"
+    inreplace "bin/nots", "\"$DIR/node\"", "#{Formula["nots-cli-node"].opt_share}/node"
     libexec.install Dir["*"]
     bin.install_symlink libexec/"bin/nots"
 
-    bash_completion.install "#{libexec}/node_modules/@oclif/plugin-autocomplete/autocomplete/brew/bash"
-    zsh_completion.install "#{libexec}/node_modules/@oclif/plugin-autocomplete/autocomplete/brew/zsh/_nots"
+    # bash_completion.install "#{libexec}/node_modules/@oclif/plugin-autocomplete/autocomplete/brew/bash"
+    # zsh_completion.install "#{libexec}/node_modules/@oclif/plugin-autocomplete/autocomplete/brew/zsh/_nots"
   end
 
   def caveats; <<~EOS
@@ -22,7 +22,7 @@ class NotsCli < Formula
             NOTE: For zsh, as the instructions mention, be sure compinit is autoloaded
                   and called, either explicitly or via a framework like oh-my-zsh.
         2) Then run
-          $ noys autocomplete --refresh-cache
+          $ nots autocomplete --refresh-cache
 
       OR
 
